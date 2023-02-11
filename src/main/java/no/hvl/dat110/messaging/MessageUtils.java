@@ -1,7 +1,5 @@
 package no.hvl.dat110.messaging;
 
-import java.util.Arrays;
-
 import no.hvl.dat110.TODO;
 
 public class MessageUtils {
@@ -21,8 +19,17 @@ public class MessageUtils {
 		// encapulate/encode the payload data of the message and form a segment
 		// according to the segment format for the messaging layer
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+//		if (true)
+//			throw new UnsupportedOperationException(TODO.method());
+		data = message.getData();
+		segment = new byte[SEGMENTSIZE];
+		int length = data.length;
+		byte b = (byte) length;
+		segment[0] = b;
+		
+		for (int i = 0; i < length; i++) {
+			segment[i+1] = data[i];
+		}
 			
 		// TODO - END
 		return segment;
@@ -36,8 +43,15 @@ public class MessageUtils {
 		// TODO - START
 		// decapsulate segment and put received payload data into a message
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+//		if (true)
+//			throw new UnsupportedOperationException(TODO.method());
+		int length = segment[0];
+		byte[] b = new byte[length];
+		for (int i = 0; i < length; i++) {
+			b[i] = segment[i+1];
+		}
+		
+		message = new Message(b);
 		
 		// TODO - END
 		

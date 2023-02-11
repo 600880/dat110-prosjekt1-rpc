@@ -23,7 +23,7 @@ public class MessageConnection {
 
 			outStream = new DataOutputStream(socket.getOutputStream());
 
-			inStream = new DataInputStream (socket.getInputStream());
+			inStream = new DataInputStream(socket.getInputStream());
 
 		} catch (IOException ex) {
 
@@ -39,8 +39,15 @@ public class MessageConnection {
 		// TODO - START
 		// encapsulate the data contained in the Message and write to the output stream
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+//		if (true)
+//			throw new UnsupportedOperationException(TODO.method());
+		data = MessageUtils.encapsulate(message);
+		try {
+			outStream.write(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
 		// TODO - END
 
@@ -54,9 +61,14 @@ public class MessageConnection {
 		// TODO - START
 		// read a segment from the input stream and decapsulate data into a Message
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		try {
+			data = inStream.readNBytes(MessageUtils.SEGMENTSIZE);
+			message = MessageUtils.decapsulate(data);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// TODO - END
 		
 		return message;
